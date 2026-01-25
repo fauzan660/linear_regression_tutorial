@@ -1,0 +1,127 @@
+<h2>How does the computer decide which line is better?</h2>
+
+<p>
+  You’ve already drawn many lines by changing the values of <strong>m</strong> and
+  <strong>c</strong>. Some lines feel close to the points, others clearly miss.
+</p>
+
+<p>
+  As humans, we can judge this by looking. A computer can’t. It needs a number
+  that tells it how bad a line is.
+</p>
+
+<p>
+  That number comes from <strong>error</strong>.
+</p>
+
+<hr>
+
+<p>
+  For a single point, error is simply the difference between the real value and
+  what the line predicts.
+</p>
+
+<p>
+  \[ \text{error} = y - \hat{y} \]
+</p>
+
+<p>
+  Points above the line give positive error, points below give negative error.
+  But the sign itself is not important.
+</p>
+
+<p>
+  What matters is <em>how far</em> the point is from the line.
+</p>
+
+<hr>
+
+<p>
+  One simple way to measure this is to take the absolute value of each error and
+  average them.
+</p>
+
+<p>
+  \[ \text{MAE} = \frac{1}{n} \sum |y - \hat{y}| \]
+</p>
+
+<p>
+  This tells us, on average, how far the line is from the points. Every mistake
+  is treated equally.
+</p>
+
+<p>
+  A small miss and a big miss both increase the error in a straight line.
+</p>
+
+<hr>
+
+<p>
+  Another way is to square each error before averaging.
+</p>
+
+<p>
+  \[ \text{MSE} = \frac{1}{n} \sum (y - \hat{y})^2 \]
+</p>
+
+<p>
+  Squaring changes things.
+</p>
+
+<p>
+  Small errors stay small, but large errors grow very fast. This means points
+  that are far from the line matter much more.
+</p>
+
+<hr>
+
+<p>
+  This difference becomes important when the computer tries to improve the line.
+</p>
+
+<p>
+  With absolute error, all points push the line with the same strength. With
+  squared error, badly predicted points push much harder.
+</p>
+
+<p>
+  Because of this, squared error gives clearer guidance when adjusting
+  <strong>m</strong> and <strong>c</strong>.
+</p>
+
+<hr>
+
+<p>
+  So two lines that look almost the same to us can be very different to the
+  computer.
+</p>
+
+<p>
+  One might have small, evenly spread mistakes. Another might have one or two
+  very bad ones.
+</p>
+
+<p>
+  Squared error makes sure those big mistakes cannot be ignored.
+</p>
+
+<hr>
+
+<p>
+  In short:
+</p>
+
+<p>
+  Absolute error asks: <br>
+  <strong>“How far am I, on average?”</strong>
+</p>
+
+<p>
+  Squared error asks: <br>
+  <strong>“Where am I messing up the most?”</strong>
+</p>
+
+<p>
+  That is why most learning algorithms prefer squared error when deciding how to
+  move the line.
+</p>

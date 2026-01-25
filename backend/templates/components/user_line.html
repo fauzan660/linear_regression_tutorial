@@ -1,0 +1,41 @@
+{%block extra_css%}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_line.css') }}">
+
+{%endblock%}
+
+
+<div class="col-6">
+  <input id="slider_m" class="form-range" type="range" step="0.4" min="0" max="4" value="2"  oninput = "slider_m_output.value = slider_m.value">
+  <output id="slider_m_output">2</output>
+</div>
+<div class="col-6">
+  <input id="slider_c" class="form-range" type="range" min="0" max="10" value="5"  oninput = "slider_c_output.value = slider_c.value">
+  <output id="slider_c_output">5</output>
+</div>
+<div class="col-12">
+  <p id="error-intro">
+    Error calculation is done by finding values of \( m \) and \( c \) such that the predicted \( y \) for each \( x \) is closest to the actual \( y \).
+  </p>
+  <div class="row">
+    <div class="col-12">
+      <div id="error-svg">
+        <div id="tooltip" role="tooltip">
+          I'm a tooltip
+          <div id="arrow" data-popper-arrow></div>
+        </div>
+        <div id="svg-plot">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p id="error-total">Error: <span>NaN</span></p>
+</div>
+
+
+
+
+
+<script src="{{ url_for('static', filename='js/components/user_line.js') }}"></script>
+
