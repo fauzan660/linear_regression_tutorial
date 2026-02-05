@@ -1,19 +1,21 @@
-import matplotlib as mpl
-mpl.rcParams['axes3d.mouserotationstyle'] = 'arcball' #, 'trackball', 'sphere', or 'arcball'
-
+import mpld3
+from mpld3 import plugins
+from mpld3.utils import get_id
 import numpy as np
+import collections
 import matplotlib.pyplot as plt
-from matplotlib import cm
 
-ax = plt.figure().add_subplot(projection='3d')
+N_paths = 5
+N_steps = 100
 
-X = np.arange(-5, 5, 0.25)
-Y = np.arange(-5, 5, 0.25)
-X, Y = np.meshgrid(X, Y)
-R = np.sqrt(X**2 + Y**2)
-Z = np.sin(R)
+x = np.linspace(0, 10, 100)
+y = 0.1 * (np.random.random((N_paths, N_steps)) - 0.5)
+y = y.cumsum(1)
 
-surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
-                       linewidth=0, antialiased=False)
+fig, ax = plt.subplots()
+labels = ["a", "b", "c", "d", "e"]
+line_collections = ax.plot(x, y.T, lw=4, alpha=0.2)
+interactive_legend = plugins.InteractiveLegendPlugin(line_collections, labels)
+plugins.connect(fig, interactive_legend)
 
-plt.show()
+mpld3.display()

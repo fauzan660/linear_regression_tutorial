@@ -54,7 +54,7 @@ imageSvg.addEventListener('mouseover', (e) => {
 
 sliderArr.forEach((elem) => {
   elem.addEventListener("change", function () {
-    fetch('/update_plot', {
+    fetch('/update-plot', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ m: sliderM.value, c: sliderC.value })

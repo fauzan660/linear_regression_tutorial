@@ -2,8 +2,8 @@ import base64
 from io import BytesIO
 from matplotlib.figure import Figure
 import numpy as np
-from matplot import figure_to_plot, figure_to_plot_3d, figure_to_svg
-from helper import surface3d_error, df_dc, df_dm, gradient_descent, error
+from api.service.matplot import figure_to_plot, figure_to_plot_3d, figure_to_svg
+from api.service.math_utils import surface3d_error, df_dc, df_dm, gradient_descent, error
 
 
 
@@ -127,41 +127,17 @@ def plot_output_surface_3d(X, y):
     ax.set_zlabel('Z Label')
     return figure_to_plot_3d(fig)
 
-def plot_gd_line_3d(X, y):
-        
-    xaug = np.c_[np.ones(X.shape[0]), X]
-    theta_i = [-5.0, 10.0] + np.random.rand(2)
-    history, cost, preds, iters = gradient_descent(xaug, y, theta_i, step=0.01)
-    theta = history[-1]
-    print("Gradient Descent: {:.2f}, {:.2f} {:d}".format(theta[0], theta[1], iters))
-        
-
-    m = np.arange(0.0, 20.0, 0.5)
+def plotly_gd_line_3d(X, y):
+    m = np.arange(-10.0, 20.0, 0.5)
     c = np.arange(-10.0, 10.0, 0.5)
 
     M, C= np.meshgrid(m, c)
-    err = np.array([error(xaug, y, [intercept, slope]) for slope,intercept in zip(np.ravel(M), np.ravel(C))])
+    err = np.array([surface3d_error(X, y, slope,intercept) for slope,intercept in zip(np.ravel(M), np.ravel(C))])
     E = err.reshape(M.shape)
-    err_min = E.min()
-    err_min_index = np.unravel_index(E.argmin(), E.shape)
-    m_min, c_min = M[err_min_index], C[err_min_index]
-
-
-
-    fig = Figure(figsize=(20, 10))
-    ax = fig.add_subplot(111, projection='3d')
-
-    ax.view_init(elev=20., azim=-70)
-
-    ax.plot_surface(M, C, E, rstride=1, cstride=1, color='b', alpha=0.2)
-    # ax.scatter3D(M, C, E)
-    ax.plot([theta[1] for theta in history], [theta[0] for theta in history], cost,markerfacecolor='r', markeredgecolor='r', marker='.', markersize=2)
-    ax.plot([theta[1] for theta in history], [theta[0] for theta in history], 0, 
-            markerfacecolor='r', markeredgecolor='r', marker='.', markersize=2)
-
-
-    ax.set_xlabel('X Label')
-    ax.set_ylabel('Y Label')
-    ax.set_zlabel('Z Label')
-
-    return figure_to_plot_3d(fig)
+    return {
+        "M": M.tolist(), 
+        "C": C.tolist(), 
+        "E": E.tolist(),
+        "m_vec": m.tolist(), # Send the 1D vector
+        "c_vec": c.tolist()  # Send the 1D vector
+    }

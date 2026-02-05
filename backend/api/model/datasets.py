@@ -4,15 +4,15 @@ def get_cases(seed=42):
     np.random.seed(seed)
 
     return [
-        # {
-        #     "name": "clean_linear_small",
-        #     "X": np.array([1, 2, 3, 4, 5]),
-        #     "y": np.array([2, 4, 6, 8, 10])
-        # },
         {
-            "name": "clean_linear_small",
-            "X": np.array([1, 2, 3, 4, 5]),
-            "y": np.array([2, 5, 18, 22, 27])
+            "name": "perfect_linear",
+            "X": np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+            "y": np.array([5, 7, 9, 11, 13, 15, 17, 19, 21, 23])   # y = 2x + 3
+        },
+        {
+            "name": "non_linear",
+            "X": np.array([1,2,3,4,5,6,7,8,9,10]),
+            "y": np.array([1,4,9,16,25,36,49,64,81,100])   # y = x^2
         },
         {
             "name": "noisy_linear_large",
@@ -24,15 +24,6 @@ def get_cases(seed=42):
             "X": np.array([1, 100, 1000, 10000]),
             "y": np.array([3, 300, 3000, 30000])
         },
-        # {
-        #     "name": "multi_feature",
-        #     "X": np.array([[1, 1],
-        #                    [2, 1],
-        #                    [3, 2],
-        #                    [4, 3],
-        #                    [5, 3]]),
-        #     "y": np.array([2, 3, 5, 7, 8])
-        # },
         {
             "name": "very_noisy",
             "X": np.linspace(0, 10, 50),

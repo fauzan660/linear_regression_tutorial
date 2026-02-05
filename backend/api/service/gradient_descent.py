@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from IPython.display import display, clear_output # Import this
-from get_plots import plot_webpage
+from api.service.plotting import plot_webpage
 
 
 def gradient_descent_regression(X, y):

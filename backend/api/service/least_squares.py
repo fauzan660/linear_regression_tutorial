@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib as plt
-from get_plots import plot_webpage
+from api.service.plotting import plot_webpage
 
 
 def least_squares_regression(X, y):
