@@ -3,14 +3,22 @@ import GradientDescent from "/static/js/math/gradient_descent.js";
 
 var g = document.getElementById('scatter_options');
 const interactive = document.getElementById("interactive-3d");
+window.currentId = 0;
 
-for (var i = 0, len = g.children.length; i < len; i++) {
-  (function (index) {
-    g.children[i].onclick = function () {
-      alert(index);
-    };
-  })(i);
+
+for (let i = 0; i < g.children.length; i++) {
+  g.children[i].onclick = function () {
+    window.currentId = i;
+    fetch(`/change-plot?id=${i}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        document.querySelector(".input_plane img").src = data.input_plane;
+        document.querySelector(".output_surface img").src = data.output_surface;
+      });
+  };
 }
+
 
 document.addEventListener("DOMContentLoaded", () => {
   fetch('/live-descent', {

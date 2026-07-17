@@ -26,14 +26,28 @@ def get_plot_page_data():
         "output_surface": plot_output_surface_3d(dataset["X"], dataset["y"])
     }
 
+def change_plot_data(id):
+    cases = get_cases()
+    dataset = cases[id]
+
+    return {
+        "c_err_img": get_c_error_images(),
+        "m_err_img": get_m_error_images(),
+        "input_plane": plot_input_plane_3d(),
+        "output_surface": plot_output_surface_3d(dataset["X"], dataset["y"])
+    }
+
+
 def update_user_line(data):
     try:
         m = float(data.get("m"))
         c = float(data.get("c"))
+        plot_id = data.get("id")
     except (TypeError, ValueError):
         return {"error": "Invalid input"}
 
-    dataset = get_cases()[0]
+    cases = get_cases()
+    dataset = cases[plot_id]
     url = user_line_plot(dataset["X"], dataset["y"], m, c)
     error_arr, error = user_line_error(dataset["X"], dataset["y"], m, c)
 

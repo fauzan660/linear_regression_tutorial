@@ -57,7 +57,7 @@ sliderArr.forEach((elem) => {
     fetch('/update-plot', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ m: sliderM.value, c: sliderC.value })
+      body: JSON.stringify({ m: sliderM.value, c: sliderC.value, id: window.currentId ?? 0}),
     })
       .then(res => res.json())
       .then(src => {
